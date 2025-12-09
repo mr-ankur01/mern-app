@@ -18,6 +18,22 @@ form {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    padding: 2rem;
+}
+form input,
+textarea {
+    padding: 0.6rem 5rem;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+form button {
+    padding: 1rem;
+    font-weight: bold;
+    background-color: black;
+    border: 1px;
+    border-radius: 5px;
+    color: whitesmoke;
 }
 
 nav {
