@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const app = express();
 
 // middlewares
+app.use(express.static("dist"));
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -15,10 +16,5 @@ app.use("/api", blogRouter);
 app.use("/api/auth", authRouter);
 
 // serve frontend build
-app.use(express.static(path.join(__dirname, "dist")));
 
-// React Router fallback (IMPORTANT)
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
 module.exports = app;
