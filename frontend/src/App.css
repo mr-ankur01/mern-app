@@ -22,9 +22,10 @@ form {
 }
 form input,
 textarea {
-    padding: 0.6rem 5rem;
+    padding: 0.6rem 2rem;
     border: 1px solid black;
     border-radius: 6px;
+    width: 20rem;
 }
 
 form button {
@@ -38,6 +39,7 @@ form button {
 
 nav {
     border-bottom: 1px solid black;
+    display: flex;
 }
 
 a {
@@ -49,6 +51,7 @@ a {
     border: 1px solid gray;
     padding: 2rem;
     margin: 2rem;
+    width: 30rem;
 }
 
 .blog {
@@ -66,4 +69,20 @@ a {
     padding: 0;
     margin: 1.5% auto;
     font-size: 15px;
+}
+
+.auth {
+    border: 1px solid black;
+    border-radius: 1rem;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin: auto 2rem;
+}
+
+.navAuth {
+    margin-left: auto;
+    padding-right: 2rem;
 }

@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formSubmit } from "../reducers/formReducer";
 import { createBlog } from "../services/blogs";
 import { useState } from "react";
@@ -7,20 +7,27 @@ import { useState } from "react";
 export default function Blog() {
   const initialData = { title: "", author: "", body: "" };
   const [formData, setFormData] = useState(initialData);
+  const [submited, setSubmited] = useState(true);
 
+  const token = useSelector((state) => state.auth.token);
   const dispatch = useDispatch();
+
   const mutation = useMutation({
-    mutationFn: createBlog,
+    mutationFn: (data) => createBlog({ data, token }),
     onSuccess: (data) => {
+      console.log(data);
       dispatch(formSubmit(data));
       setFormData(initialData);
+      setSubmited(true);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmited(false);
     mutation.mutate(formData);
   };
+
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
@@ -38,12 +45,13 @@ export default function Blog() {
             setFormData((d) => ({ ...d, author: e.target.value }))
           }
         />
-        <input
+        <textarea
+          className="blogBody"
           placeholder="Body of blog"
           value={formData.body}
           onChange={(e) => setFormData((d) => ({ ...d, body: e.target.value }))}
         />
-        <button>{mutation.isSuccess ? "Submit" : "submitting"}</button>
+        <button>{submited ? "Submit" : "submitting..."}</button>
       </form>
     </div>
   );

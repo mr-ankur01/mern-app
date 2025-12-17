@@ -6,10 +6,10 @@ import { useEffect } from "react";
 export default function Home() {
   const dispatch = useDispatch();
   const blogData = useSelector((state) => state.blogs);
-
+  const token = useSelector((state) => state.auth.token);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["data"],
-    queryFn: getAll,
+    queryFn: () => getAll(token),
   });
 
   useEffect(() => {
@@ -18,21 +18,31 @@ export default function Home() {
 
   if (isLoading) return <div className="container">Loading...</div>;
   if (isError) return <div className="container">Error</div>;
-  console.log(blogData);
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div className="container">
       <h2>BLOGS</h2>
       <div className="blogContainer">
-        {blogData &&
-          blogData.map((blog) => {
-            return (
-              <div className="blog" key={blog._id}>
-                <label>{blog.title}</label>
-                <p>{blog.body}</p>
-                <span>{blog.date}</span>
-              </div>
-            );
-          })}
+        {blogData.length > 0
+          ? blogData.map((blog) => {
+              return (
+                <div className="blog" key={blog._id}>
+                  <label>{blog.title}</label>
+                  <p>{blog.body}</p>
+                  <span>{blog.updatedAt && formatDate(blog.updatedAt)}</span>
+                </div>
+              );
+            })
+          : "there is nothing"}
       </div>
     </div>
   );
