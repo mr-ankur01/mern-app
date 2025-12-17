@@ -5,6 +5,11 @@ const blogsSchema = new mongoose.Schema(
     title: String,
     author: String,
     body: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { timestamps: true },
 );

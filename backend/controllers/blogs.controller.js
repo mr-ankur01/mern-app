@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
 
 const createBlog = async (req, res) => {
   const data = req.body;
-  const resblog = await blogs.insertOne(data);
+  const resblog = await blogs.insertOne({ ...data, userId: req.user.id });
   res.json(resblog);
 };
 
